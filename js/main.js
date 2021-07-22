@@ -1,32 +1,3 @@
-// new Swiper('.swiper-container', {
-// 	loop: true,
-// 	navigation: {
-// 		nextEl: '.arrow',
-// 	},
-// 	breakpoints: {
-// 		320: {
-// 			slidesPerView: 1,
-// 			spaceBetween: 20
-// 		},
-// 		541: {
-// 			slidesPerView: 2,
-// 			spaceBetween: 40
-// 		}
-// 	}
-// });
-
-// const menuButton = document.querySelector('.menu-button');
-// const menu = document.querySelector('.header');
-// menuButton.addEventListener('click', function () {
-// 	menuButton.classList.toggle('menu-button-active');
-// 	menu.classList.toggle('header-active');
-// })
-// if (typeof window === "object") {
-//   // Check if document is finally loaded document.
-//   addEventListener("DOMContentLoaded", function () {
-//     alert("Finished loading");
-//   });
-// }
 const getElement = (tagName, classNames, attributes) => {
   const element = document.createElement(tagName);
   if (classNames) {
@@ -40,22 +11,22 @@ const getElement = (tagName, classNames, attributes) => {
   return element;
 };
 
-const createHeader = (param) => {
+const createHeader = ({ title, header: { logo, menu, social } }) => {
   const header = getElement("header");
   const container = getElement("div", ["container"]);
   const wrapper = getElement("div", ["header"]);
 
-  if (param.header.logo) {
-    const logo = getElement("img", ["logo"], {
-      src: param.header.logo,
-      alt: "Логотип " + param.title,
+  if (logo) {
+    const logoElem = getElement("img", ["logo"], {
+      src: logo,
+      alt: "Логотип " + title,
     });
-    wrapper.append(logo);
+    wrapper.append(logoElem);
   }
 
-  if (param.header.social) {
+  if (social) {
     const socialWrapper = getElement("div", ["social"]);
-    const allSocial = param.header.social.map((item) => {
+    const allSocial = social.map((item) => {
       const socialLink = getElement("a", ["social-link"]);
       socialLink.append(
         getElement("img", [], {
@@ -72,10 +43,10 @@ const createHeader = (param) => {
     wrapper.append(socialWrapper);
   }
 
-  if (param.header.menu) {
+  if (menu) {
     //homework
     const nav = getElement("nav", ["menu-list"]);
-    const allMenuLink = param.header.menu.map((item) => {
+    const allMenuLink = menu.map((item) => {
       const Link = getElement("a", ["menu-link"], {
         href: item.link,
         textContent: item.title,
@@ -84,6 +55,12 @@ const createHeader = (param) => {
     });
     nav.append(...allMenuLink);
     wrapper.append(nav);
+    const menuBtn = getElement("button", ["menu-button"]);
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("menu-button-active");
+      wrapper.classList.toggle("header-active");
+    });
+    container.append(menuBtn);
   }
 
   header.append(container);
@@ -93,7 +70,7 @@ const createHeader = (param) => {
 
 const createMain = ({
   title,
-  main: { genre, rating, description, trailer },
+  main: { genre, rating, description, trailer, slider },
 }) => {
   const main = getElement("main");
   const container = getElement("div", ["container"]);
@@ -168,15 +145,92 @@ const createMain = ({
       wrapper.append(youtubeImgLink);
     }
   }
+  if (slider) {
+    const sliderBlock = getElement("div", ["series"]);
+    const swiperBlock = getElement("div", ["swiper-container"]);
+    const swiperWrapper = getElement("div", ["swiper-wrapper"]);
+    const arrow = getElement("button", ["arrow"]);
+
+    const slides = slider.map((item) => {
+      const swiperSlide = getElement("div", ["swiper-slide"]);
+      const card = getElement("figure", ["card"]);
+      const cardImage = getElement("img", ["card-img"], {
+        src: item.img,
+        alt: (
+          (item.title ? item.title + "  " : "") +
+          (item.subtitle ? item.subtitle : "")
+        ).trim(),
+      });
+      card.append(cardImage);
+
+      if (item.title || item.subtitle) {
+        const cardDescription = getElement("figcaption", ["card-description"]);
+        cardDescription.innerHTML = `
+        ${item.subtitle ? `${item.subtitle}` : ""}
+        ${item.title ? `${item.title}` : ""}
+        `;
+        card.append(cardDescription);
+      }
+      swiperSlide.append(card);
+      return swiperSlide;
+    });
+    swiperWrapper.append(...slides);
+    swiperBlock.append(swiperWrapper);
+    sliderBlock.append(swiperBlock, arrow);
+    container.append(sliderBlock);
+    new Swiper(swiperBlock, {
+      loop: true,
+      navigation: {
+        nextEl: arrow,
+      },
+      breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        541: {
+          slidesPerView: 2,
+          spaceBetween: 40,
+        },
+      },
+    });
+  }
+
   return main;
 };
+//favicon - homework
+// const link = document.createElement("link");
+// link.type = "image/png";
+// link.rel = "shortcut icon";
+// link.href = "witcher/logo.png";
+// document.getElementsByTagName("head")[0].appendChild(link);
+
 const movieConstructor = (selector, options) => {
   const app = document.querySelector(selector);
   app.classList.add("body-app");
+
+  app.style.color = options.fontColor || "";
+  app.style.backgroundColor = options.backgroundColor || "";
+
+  if (options.subColor) {
+    document.documentElement.style.setProperty("--sub-color", options.subColor);
+  }
   app.style.backgroundImage = options.background
     ? `url("${options.background}")`
     : "";
   document.title = options.title;
+
+  if (options.favicon) {
+    const index = options.favicon.lastIndexOf(".");
+    const type = options.favicon.substring(index + 1);
+
+    const favicon = getElement("link", null, {
+      rel: "icon",
+      href: options.favicon,
+      type: "image/ " + (type === "svg" ? "svg-xml" : type),
+    });
+    document.head.append(favicon);
+  }
 
   if (options.header) {
     header = createHeader(options);
@@ -190,6 +244,10 @@ const movieConstructor = (selector, options) => {
 
 movieConstructor(".app", {
   title: "Ведьмак",
+  favicon: "witcher/logo.png",
+  fontColor: "#ffffff",
+  backgroundColor: "#141218",
+  subColor: "#902929",
   background: "witcher/background.jpg",
   header: {
     logo: "witcher/logo.png",
@@ -219,5 +277,27 @@ movieConstructor(".app", {
     мешочек чеканных монет этот мужчина избавит вас от всякой настырной нечисти — хоть от чудищ болотных, оборотней и даже
     заколдованных принцесс.`,
     trailer: "https://www.youtube.com/watch?v=P0oJqfLzZzQ",
+    slider: [
+      {
+        img: "witcher/series/series-1.jpg",
+        title: "Начало конца",
+        subtitle: "Серия №1",
+      },
+      {
+        img: "witcher/series/series-2.jpg",
+        title: "Четыре марки",
+        subtitle: "Серия №2",
+      },
+      {
+        img: "witcher/series/series-3.jpg",
+        title: "Предательская луна",
+        subtitle: "Серия №3",
+      },
+      {
+        img: "witcher/series/series-4.jpg",
+        title: "Банкеты, ублюдки и похороны",
+        subtitle: "Серия №4",
+      },
+    ],
   },
 });
