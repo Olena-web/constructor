@@ -243,25 +243,25 @@ const movieConstructor = (selector, options) => {
 };
 
 movieConstructor(".app", {
-  title: "Локи",
-  favicon: "loki/favicon.png",
-  fontColor: "#ffffff",
+  title: "Blackwidow",
+  favicon: "BlackWidow/logo.png",
+  fontColor: "black",
   backgroundColor: "#00000",
-  subColor: "#206",
-  background: "loki/background.jpg",
+  subColor: "red",
+  background: "BlackWidow/background.jpg",
   header: {
-    logo: "loki/logo.png",
+    logo: "BlackWidow/logo.png",
     social: [
-      { title: "Twitter", link: "#", image: "witcher/social/twitter.svg" },
+      { title: "Twitter", link: "#", image: "BlackWidow/social/twitter.svg" },
       {
         title: "facebook",
         link: "#",
-        image: "witcher/social/facebook.svg",
+        image: "BlackWidow/social/facebook.svg",
       },
       {
         title: "Instagram",
         link: "#",
-        image: "witcher/social/instagram.svg",
+        image: "BlackWidow/social/instagram.svg",
       },
     ],
     menu: [
@@ -299,42 +299,69 @@ movieConstructor(".app", {
   //       subtitle: "Серия №4",
   //     },
   //   ],
+  // main: {
+  //   genre: "2021, фантастика, фэнтези, боевик, приключения",
+  //   rating: "8",
+  //   description:
+  //     "Локи попадает в таинственную организацию «Управление временными изменениями» после того, как он украл Тессеракт, и путешествует во времени, меняя историю.",
+  //   trailer: "https://youtu.be/YrjHcYqe31g",
+  //   slider: [
+  //     {
+  //       img: "loki/series/series-1.jpg",
+  //       title: "Славная миссия",
+  //       subtitle: "Серия №1",
+  //     },
+  //     {
+  //       img: "loki/series/series-2.jpg",
+  //       title: "Вариант",
+  //       subtitle: "Серия №2",
+  //     },
+  //     {
+  //       img: "loki/series/series-3.jpg",
+  //       title: "Ламентис",
+  //       subtitle: "Серия №3",
+  //     },
+  //     {
+  //       img: "loki/series/series-4.jpg",
+  //       title: "Смежное событие",
+  //       subtitle: "Серия №4",
+  //     },
+  //     {
+  //       img: "loki/series/series-5.jpg",
+  //       title: "Путешествие в неизвестность",
+  //       subtitle: "Серия №5",
+  //     },
+  //     {
+  //       img: "loki/series/series-6.jpg",
+  //       title: "На все времена. Всегда",
+  //       subtitle: "Серия №6",
+  //     },
+  //   ],
+  // },
   main: {
-    genre: "2021, фантастика, фэнтези, боевик, приключения",
-    rating: "8",
+    genre: "2021, Action, Thriller ",
+    rating: "6.6",
     description:
-      "Локи попадает в таинственную организацию «Управление временными изменениями» после того, как он украл Тессеракт, и путешествует во времени, меняя историю.",
-    trailer: "https://youtu.be/YrjHcYqe31g",
+      "Natasha Romanoff, also known as Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and the broken relationships left in her wake long before she became an Avenger..",
+    trailer: "https://www.youtube.com/watch?v=W7Pl9s3ybvA",
     slider: [
       {
-        img: "loki/series/series-1.jpg",
-        title: "Славная миссия",
-        subtitle: "Серия №1",
+        img: "BlackWidow/slider/01.jpg",
       },
       {
-        img: "loki/series/series-2.jpg",
-        title: "Вариант",
-        subtitle: "Серия №2",
+        img: "BlackWidow/slider/02.jpg",
       },
       {
-        img: "loki/series/series-3.jpg",
-        title: "Ламентис",
-        subtitle: "Серия №3",
+        img: "BlackWidow/slider/03.jpg",
       },
       {
-        img: "loki/series/series-4.jpg",
-        title: "Смежное событие",
-        subtitle: "Серия №4",
+        img: "BlackWidow/slider/04.jpg",
       },
       {
-        img: "loki/series/series-5.jpg",
-        title: "Путешествие в неизвестность",
-        subtitle: "Серия №5",
+        img: "BlackWidow/slider/05.jpg",
       },
       {
-        img: "loki/series/series-6.jpg",
-        title: "На все времена. Всегда",
-        subtitle: "Серия №6",
+        img: "BlackWidow/slider/06.jpg",
       },
     ],
   },
