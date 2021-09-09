@@ -18,5 +18,5 @@ Glo Academy training project
      1. Fetch
      2. template string
      3. spread
-     4. rest 
+     4. rest   
 [gh-pages](https://olena-web.github.io/constructor/)
